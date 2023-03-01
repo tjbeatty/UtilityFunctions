@@ -5,6 +5,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(dir_path)
 
 import logging
+from logging import Logger
 import os
 from logging.config import dictConfig
 from dotenv import load_dotenv
@@ -35,7 +36,19 @@ LOGGING_CONFIG = {
 }
 
 
-def get_logger(name: str, log_file: str = None) -> logging.Logger:
+def get_logger(name: str) -> Logger:
+    """A function to instantiate a logger
+
+    Parameters
+    ----------
+    name : str
+        name of the logger
+
+    Returns
+    -------
+    Logger
+        A logger object
+    """
     dictConfig(LOGGING_CONFIG)
     log = logging.getLogger(name)
 

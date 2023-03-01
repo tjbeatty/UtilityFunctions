@@ -1,5 +1,5 @@
 pandas
-psycopg2
+aws-psycopg2
 python-dotenv
 pre-commit
 boto3

@@ -5,7 +5,18 @@ from psycopg2.sql import SQL
 
 
 def tables_in_schema_query(schema: str) -> SQL:
-    """Query to identify tables in the schema provided"""
+    """Query to identify tables in the schema provided
+
+    Parameters
+    ----------
+    schema : str
+        a schema
+
+    Returns
+    -------
+    SQL
+        Returns formatted Psycopg2 SQL object
+    """
 
     query_template = """
         SELECT table_name,'TABLE' as table_or_view
@@ -24,7 +35,20 @@ def tables_in_schema_query(schema: str) -> SQL:
 
 
 def columns_dtypes_of_table_query(schema: str, table: str) -> SQL:
-    """Query to get a list of columns and data types from the table specified"""
+    """Query to get a list of columns and data types from the table specified
+
+    Parameters
+    ----------
+    schema : str
+        a schema
+
+    table : str
+        a table name
+
+    Returns
+    -------
+    SQL
+        Returns formatted Psycopg2 SQL object"""
 
     query_template = """
         SELECT c.column_name, c.udt_name as dtype
@@ -41,6 +65,21 @@ def columns_dtypes_of_table_query(schema: str, table: str) -> SQL:
 
 
 def row_count_query(schema: str, table: str) -> SQL:
+    """Query to get the row count of a tbale
+
+    Parameters
+    ----------
+    schema : str
+        a schema
+
+    table : str
+        a table name
+
+    Returns
+    -------
+    SQL
+        Returns formatted Psycopg2 SQL object"""
+
     query_template = """
     SELECT count(*)
     FROM {schema}.{table}
@@ -61,7 +100,30 @@ def generic_sql_query(
     limit: int = False,
     random: bool = False,
 ) -> SQL:
-    """Generic SELECT query, with optional limit and pseudo-random flag"""
+    """Generic SELECT query, with optional limit and pseudo-random flag
+
+    Parameters
+    ----------
+    schema : str
+        a schema
+
+    table : str
+        a table name
+
+    clause : str (optional) default = None
+        WHERE clause of a query
+
+    limit : int (optional), default = None
+        LIMIT of a query
+
+    random : bool (optional), default = False
+        whether you want pseudo-random results or not
+
+    Returns
+    -------
+    SQL
+        Returns formatted Psycopg2 SQL object
+    """
     query_template = """
         SELECT *
         FROM {schema}.{table}
@@ -88,5 +150,19 @@ def generic_sql_query(
 
 
 def params_in_query_template(query_template: str, params: dict) -> SQL:
-    """Insert parameters into query template"""
+    """A function to insert parameters into query template
+
+    Parameters
+    ----------
+    query_template : str
+        a query template with placeholder values
+
+    params : dict
+        a dictionary of parameters to be inserted into the query template
+
+    Returns
+    -------
+    SQL
+        Returns formatted Psycopg2 SQL object
+    """
     return SQL(query_template).format(**params)
